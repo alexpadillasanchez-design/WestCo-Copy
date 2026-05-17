@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Westco Copy — Words that earn their keep.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,300;1,6..72,400;1,6..72,500;1,6..72,600;1,6..72,700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bone:#F2EEE3;
+    --bone-2:#E8E3D5;
+    --bone-3:#DCD5C2;
+    --ink:#15171A;
+    --ink-2:#2A2C30;
+    --forest:#3D4A2C;
+    --forest-2:#2C361F;
+    --clay:#B5442E;
+    --news:#7A7268;
+    --rule:rgba(21,23,26,0.18);
+
+    --display:'Anton', 'Arial Narrow', sans-serif;
+    --serif:'Newsreader', Georgia, serif;
+    --mono:'Space Mono', ui-monospace, monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--bone);color:var(--ink);}
+  body{
+    font-family:var(--serif);
+    font-size:18px;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--clay);color:var(--bone);}
+  a{color:inherit;}
+
+  /* === paper noise ============================================= */
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:50;
+    background-image:
+      radial-gradient(rgba(21,23,26,.035) 1px, transparent 1px),
+      radial-gradient(rgba(21,23,26,.025) 1px, transparent 1px);
+    background-size: 3px 3px, 7px 7px;
+    background-position: 0 0, 1px 2px;
+    mix-blend-mode:multiply;
+    opacity:.55;
+  }
+
+  /* === helpers ================================================== */
+  .mono{font-family:var(--mono);text-transform:uppercase;letter-spacing:.08em;font-size:11px;font-weight:400;}
+  .mono.sm{font-size:10px;letter-spacing:.14em;}
+  .mono.lg{font-size:13px;letter-spacing:.06em;}
+  .display{font-family:var(--display);font-weight:400;line-height:.82;letter-spacing:-.005em;text-transform:uppercase;}
+  .serif-italic{font-family:var(--serif);font-style:italic;font-weight:400;}
+  .rule{height:1px;background:var(--rule);width:100%;}
+  .rule.ink{background:var(--ink);height:2px;}
+  .clay{color:var(--clay);}
+  .forest{color:var(--forest);}
+  .news{color:var(--news);}
+
+  .wrap{max-width:1480px;margin:0 auto;padding:0 36px;}
+  @media (max-width:720px){.wrap{padding:0 20px;}}
+
+  /* tape/redaction blocks */
+  .tape{display:inline-block;background:var(--ink);height:.55em;vertical-align:middle;}
+  .marker{display:inline-block;background:var(--ink);height:.2em;vertical-align:middle;}
+
+  /* rotated marginalia */
+  .vert{
+    writing-mode:vertical-rl;
+    transform:rotate(180deg);
+    font-family:var(--mono);
+    font-size:10px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--news);
+    white-space:nowrap;
+  }
+
+  /* ================================================================
+     MASTHEAD
+     ================================================================ */
+  .masthead{
+    border-bottom:1.5px solid var(--ink);
+    padding:14px 36px 12px;
+    display:grid;
+    grid-template-columns:1fr auto 1fr;
+    align-items:end;
+    gap:24px;
+  }
+  .masthead .left{display:flex;gap:24px;align-items:end;}
+  .masthead .center{
+    font-family:var(--display);
+    font-size:34px;
+    line-height:.82;
+    letter-spacing:.02em;
+    text-transform:uppercase;
+    text-align:center;
+  }
+  .masthead .right{display:flex;gap:24px;justify-content:flex-end;align-items:end;}
+  .masthead a{text-decoration:none;}
+  .nav-link{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;}
+  .nav-link:hover{color:var(--clay);}
+  .masthead .pill{
+    border:1px solid var(--ink);
+    padding:5px 9px;
+    font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  }
+
+  /* sub-masthead ribbon */
+  .ribbon{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:8px 36px;
+    border-bottom:1px solid var(--ink);
+    font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--ink-2);
+  }
+
+  /* ================================================================
+     HERO
+     ================================================================ */
+  .hero{
+    position:relative;
+    padding:60px 0 40px;
+    overflow:hidden;
+  }
+  .hero .grid{
+    display:grid;
+    grid-template-columns:60px 1fr 60px;
+    gap:0;
+    align-items:start;
+  }
+  .hero .leftcol{
+    display:flex;flex-direction:column;gap:32px;
+    padding-top:8px;
+  }
+  .hero .rightcol{
+    display:flex;flex-direction:column;gap:32px;align-items:flex-end;
+    padding-top:8px;
+  }
+  .hero .stack{position:relative;}
+  .megatitle{
+    font-family:var(--display);
+    text-transform:uppercase;
+    line-height:.86;
+    letter-spacing:-.008em;
+    font-size:clamp(56px, 9.4vw, 132px);
+    margin-left:-.02em;
+  }
+  .megatitle .row{display:block;}
+
+  /* dual-tone clay block behind lower headline rows */
+  .title-wrap{position:relative;display:inline-block;}
+  .title-wrap .clay-block{
+    position:absolute;
+    left:-.08em; right:-1.2em;
+    top:54%; bottom:-.06em;
+    background:var(--clay);
+    z-index:0;
+    pointer-events:none;
+  }
+  .title-wrap .megatitle{position:relative;z-index:1;color:var(--ink);}
+  .title-wrap .megatitle.flip{
+    position:absolute;inset:0;
+    color:var(--bone);
+    z-index:2;
+    clip-path: inset(54% -1.2em -.06em -.08em);
+  }
+  .megatitle .ital{
+    font-family:var(--serif);
+    font-style:italic;
+    font-weight:400;
+    text-transform:none;
+    letter-spacing:-.02em;
+  }
+
+  .hero-meta{
+    display:grid;
+    grid-template-columns:1fr 2fr;
+    gap:48px;
+    margin-top:48px;
+    padding:24px 0 0;
+    border-top:1.5px solid var(--ink);
+  }
+  .hero-meta h4{
+    font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--news);margin-bottom:10px;
+  }
+  .hero-meta p{
+    font-family:var(--serif);font-size:17px;line-height:1.45;color:var(--ink);
+  }
+  .hero-meta .lede{
+    font-family:var(--serif);font-style:italic;font-size:24px;line-height:1.32;
+    text-wrap:pretty;
+  }
+  .hero-meta .lede em{font-style:normal;font-weight:600;}
+  .hero-meta .lede .accent{color:var(--clay);font-style:italic;}
+
+  /* ================================================================
+     MARQUEE STRIP
+     ================================================================ */
+  .marquee{
+    background:var(--ink);color:var(--bone);
+    padding:10px 0;
+    border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);
+    overflow:hidden;
+    white-space:nowrap;
+  }
+  .marquee-inner{
+    display:inline-flex;gap:32px;align-items:center;
+    animation: scroll 38s linear infinite;
+    font-family:var(--display);
+    font-size:24px;
+    text-transform:uppercase;
+    letter-spacing:.02em;
+    line-height:1;
+  }
+  .marquee-inner .dot{
+    width:.32em;height:.32em;background:var(--clay);border-radius:50%;
+    display:inline-block;
+  }
+  .marquee-inner .ital{font-family:var(--serif);font-style:italic;font-weight:400;text-transform:none;letter-spacing:-.01em;}
+  @keyframes scroll{
+    from{transform:translateX(0);}
+    to{transform:translateX(-50%);}
+  }
+
+  /* ================================================================
+     SERVICES (the kit)
+     ================================================================ */
+  .services{padding:120px 0 80px;position:relative;}
+  .section-head{
+    display:grid;grid-template-columns:1fr auto 1fr;align-items:end;gap:24px;
+    border-bottom:1.5px solid var(--ink);
+    padding-bottom:14px;margin-bottom:48px;
+  }
+  .section-head h2{
+    font-family:var(--display);font-size:96px;line-height:.82;text-transform:uppercase;letter-spacing:-.005em;
+  }
+  .section-head .ital{font-family:var(--serif);font-style:italic;font-size:54px;text-transform:none;letter-spacing:-.01em;line-height:.9;color:var(--ink);}
+  .section-head .num{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--news);}
+
+  .svc-grid{
+    display:grid;
+    grid-template-columns:repeat(12,1fr);
+    gap:24px 24px;
+  }
+  .svc{
+    grid-column:span 4;
+    border-top:1px solid var(--ink);
+    padding-top:18px;
+    display:flex;flex-direction:column;gap:14px;
+    min-height:320px;
+  }
+  .svc .top{display:flex;justify-content:space-between;align-items:baseline;}
+  .svc h3{
+    font-family:var(--display);font-size:64px;line-height:.85;letter-spacing:-.005em;text-transform:uppercase;
+  }
+  .svc h3 .ital{
+    font-family:var(--serif);font-style:italic;font-weight:400;font-size:.7em;text-transform:none;letter-spacing:-.02em;
+  }
+  .svc p{font-family:var(--serif);font-size:16px;line-height:1.5;color:var(--ink-2);max-width:36ch;}
+  .svc ul{list-style:none;display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:18px;}
+  .svc ul li{
+    font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    border:1px solid var(--ink);padding:4px 7px;
+  }
+  .svc.alt{grid-column:span 4;background:var(--forest);color:var(--bone);padding:24px;border-top:none;}
+  .svc.alt h3,.svc.alt p,.svc.alt .top,.svc.alt ul li{color:var(--bone);}
+  .svc.alt ul li{border-color:var(--bone);}
+
+  /* ================================================================
+     MANIFESTO — pull quote spread
+     ================================================================ */
+  .manifesto{padding:80px 0 120px;position:relative;}
+  .manifesto .grid{display:grid;grid-template-columns:1fr 5fr 1fr;align-items:start;}
+  .manifesto .pull{
+    font-family:var(--serif);font-style:italic;font-weight:400;
+    font-size:clamp(38px, 5.4vw, 84px);
+    line-height:1.04;letter-spacing:-.018em;
+    color:var(--ink);
+    text-wrap:balance;
+  }
+  .manifesto .pull .accent{color:var(--clay);}
+  .manifesto .pull .strike{text-decoration:line-through;text-decoration-thickness:3px;text-decoration-color:var(--ink);}
+  .manifesto .pull .display{
+    font-family:var(--display);font-style:normal;font-weight:400;text-transform:uppercase;letter-spacing:-.005em;
+    display:inline-block;line-height:.85;
+  }
+  .manifesto .attribution{
+    margin-top:60px;
+    display:flex;justify-content:space-between;align-items:end;
+    border-top:1px solid var(--ink);padding-top:14px;
+  }
+  .manifesto .attribution .who{
+    font-family:var(--serif);font-size:15px;color:var(--ink-2);max-width:30ch;
+  }
+  .manifesto .attribution .who em{font-style:italic;}
+
+  /* ================================================================
+     PROCESS — 4 steps
+     ================================================================ */
+  .process{padding:80px 0 120px;}
+  .proc-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+    border-top:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink);
+  }
+  .proc{
+    border-right:1px solid var(--rule);
+    padding:28px 22px 32px;
+    min-height:280px;
+    display:flex;flex-direction:column;gap:14px;
+  }
+  .proc:last-child{border-right:none;}
+  .proc .step{
+    font-family:var(--display);font-size:120px;line-height:.85;color:var(--ink);letter-spacing:-.01em;
+  }
+  .proc h4{
+    font-family:var(--display);font-size:28px;text-transform:uppercase;line-height:.95;letter-spacing:-.005em;
+  }
+  .proc h4 .ital{font-family:var(--serif);font-style:italic;text-transform:none;font-weight:400;letter-spacing:-.02em;}
+  .proc p{font-family:var(--serif);font-size:14.5px;line-height:1.5;color:var(--ink-2);max-width:30ch;}
+  .proc .tag{
+    font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--news);margin-top:auto;
+  }
+
+  /* ================================================================
+     CONTACT
+     ================================================================ */
+  .contact{padding:120px 0;background:var(--ink);color:var(--bone);position:relative;overflow:hidden;}
+  .contact .megatitle{color:var(--bone);}
+  .contact .megatitle .ital{color:var(--bone-2);}
+  .contact .megatitle .accent{color:var(--clay);}
+  .contact .info{
+    margin-top:48px;
+    display:grid;grid-template-columns:repeat(4,1fr);gap:24px;
+    border-top:1.5px solid var(--bone);padding-top:24px;
+  }
+  .contact .info h5{
+    font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--bone-2);margin-bottom:10px;
+  }
+  .contact .info p, .contact .info a{
+    font-family:var(--serif);font-size:18px;line-height:1.4;color:var(--bone);text-decoration:none;
+  }
+  .contact .info a:hover{color:var(--clay);}
+  .contact .bigemail{
+    margin-top:24px;
+    font-family:var(--display);font-size:clamp(48px,7.4vw,124px);line-height:.9;text-transform:uppercase;letter-spacing:-.012em;
+    color:var(--bone);
+    word-break:break-word;
+  }
+  .contact .bigemail .ital{font-family:var(--serif);font-style:italic;font-weight:400;text-transform:none;letter-spacing:-.02em;font-size:.7em;color:var(--bone-2);}
+  .contact .bigemail .underline{text-decoration:underline;text-underline-offset:.04em;text-decoration-thickness:.06em;}
+
+  /* contact CTA / brief form */
+  .brief{
+    margin-top:48px;
+    border-top:1.5px solid var(--bone);
+    padding-top:28px;
+    display:grid;
+    grid-template-columns:1fr 1.4fr;
+    gap:48px;
+    align-items:start;
+  }
+  .brief .intro{display:flex;flex-direction:column;gap:14px;}
+  .brief .intro h3{
+    font-family:var(--display);
+    font-size:54px;line-height:.92;text-transform:uppercase;letter-spacing:-.005em;
+    color:var(--bone);
+  }
+  .brief .intro h3 .ital{
+    font-family:var(--serif);font-style:italic;font-weight:400;font-size:.7em;text-transform:none;letter-spacing:-.02em;color:var(--bone-2);
+  }
+  .brief .intro p{
+    font-family:var(--serif);font-size:17px;line-height:1.5;color:var(--bone-2);max-width:36ch;
+  }
+  .brief .intro .info-row{
+    margin-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:18px;
+    border-top:1px solid rgba(242,238,227,.18);padding-top:18px;
+  }
+  .brief .intro .info-row h5{
+    font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--bone-2);margin-bottom:8px;
+  }
+  .brief .intro .info-row p,
+  .brief .intro .info-row a{
+    font-family:var(--serif);font-size:15px;line-height:1.45;color:var(--bone);text-decoration:none;
+  }
+  .brief .intro .info-row a:hover{color:var(--clay);}
+
+  .brief form{display:grid;grid-template-columns:1fr 1fr;gap:18px 18px;}
+  .brief .field{display:flex;flex-direction:column;gap:6px;}
+  .brief .field.full{grid-column:1 / -1;}
+  .brief label{
+    font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--bone-2);
+    display:flex;justify-content:space-between;
+  }
+  .brief input,.brief textarea,.brief select{
+    width:100%;
+    background:transparent;
+    border:none;border-bottom:1px solid rgba(242,238,227,.4);
+    color:var(--bone);
+    font-family:var(--serif);font-size:18px;line-height:1.4;
+    padding:8px 0 10px;
+    outline:none;
+    transition:border-color .2s ease;
+    resize:none;
+    border-radius:0;
+  }
+  .brief textarea{min-height:108px;}
+  .brief select{
+    appearance:none;
+    background-image:linear-gradient(45deg,transparent 50%, var(--bone-2) 50%),linear-gradient(135deg, var(--bone-2) 50%, transparent 50%);
+    background-position:calc(100% - 14px) 18px, calc(100% - 8px) 18px;
+    background-size:6px 6px;background-repeat:no-repeat;
+    padding-right:24px;
+    cursor:pointer;
+  }
+  .brief select option{background:var(--ink);color:var(--bone);}
+  .brief input::placeholder,.brief textarea::placeholder{color:rgba(242,238,227,.35);font-style:italic;}
+  .brief input:focus,.brief textarea:focus,.brief select:focus{border-bottom-color:var(--clay);}
+  .brief .actions{
+    grid-column:1 / -1;
+    display:flex;justify-content:space-between;align-items:center;gap:20px;
+    margin-top:6px;
+  }
+  .brief button{
+    background:var(--bone);color:var(--ink);
+    border:none;cursor:pointer;
+    font-family:var(--display);text-transform:uppercase;letter-spacing:.005em;
+    font-size:28px;line-height:1;
+    padding:18px 26px 16px;
+    transition:background .15s ease,color .15s ease,transform .15s ease;
+  }
+  .brief button .ital{
+    font-family:var(--serif);font-style:italic;font-weight:400;font-size:.7em;text-transform:none;letter-spacing:-.02em;
+  }
+  .brief button:hover{background:var(--clay);color:var(--bone);}
+  .brief button:active{transform:translateY(1px);}
+  .brief .hint{
+    font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--bone-2);
+    max-width:32ch;text-align:right;
+  }
+  .brief .sent{
+    grid-column:1 / -1;
+    display:none;
+    background:var(--forest);color:var(--bone);
+    padding:18px 22px;
+    margin-top:8px;
+  }
+  .brief .sent.show{display:flex;justify-content:space-between;align-items:center;gap:24px;}
+  .brief .sent .msg{font-family:var(--serif);font-size:16px;font-style:italic;}
+  .brief .sent .ok{
+    font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--bone-2);
+  }
+
+  @media (max-width:1100px){
+    .brief{grid-template-columns:1fr;gap:36px;}
+  }
+  @media (max-width:720px){
+    .brief form{grid-template-columns:1fr;}
+    .brief .intro h3{font-size:42px;}
+    .brief .intro .info-row{grid-template-columns:1fr;}
+    .brief .actions{flex-direction:column;align-items:flex-start;}
+    .brief .hint{text-align:left;}
+  }
+
+  /* ================================================================
+     COLOPHON FOOTER
+     ================================================================ */
+  .colophon{
+    border-top:1px solid var(--bone);
+    margin-top:80px;padding-top:18px;
+    display:flex;justify-content:space-between;align-items:end;flex-wrap:wrap;gap:18px;
+    font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--bone-2);
+  }
+  .colophon .westco-mark{
+    font-family:var(--display);font-size:60px;line-height:.82;color:var(--bone);letter-spacing:.01em;
+  }
+
+  /* ================================================================
+     UTILS — small visual marks
+     ================================================================ */
+  .markred{position:relative;display:inline-block;}
+  .markred::after{
+    content:"";position:absolute;left:-.06em;right:-.06em;top:.18em;bottom:.16em;
+    background:var(--clay);opacity:.85;z-index:-1;
+    transform:skewY(-2deg);
+  }
+  .underscribble{position:relative;display:inline-block;}
+  .underscribble::after{
+    content:"";position:absolute;left:-.02em;right:-.02em;bottom:-.06em;height:.12em;
+    background:var(--ink);
+  }
+
+  /* ==============================================================
+     RESPONSIVE
+     ============================================================== */
+  @media (max-width:1100px){
+    .svc, .svc.alt{grid-column:span 6;}
+    .proc-grid{grid-template-columns:repeat(2,1fr);}
+    .proc:nth-child(2){border-right:none;}
+    .proc:nth-child(-n+2){border-bottom:1px solid var(--rule);}
+    .contact .info{grid-template-columns:repeat(2,1fr);}
+  }
+  @media (max-width:720px){
+    .masthead{grid-template-columns:1fr auto;}
+    .masthead .right{display:none;}
+    .masthead .center{font-size:24px;}
+    .hero .grid{grid-template-columns:24px 1fr 24px;}
+    .hero-meta{grid-template-columns:1fr;gap:24px;}
+    .section-head h2{font-size:56px;}
+    .section-head .ital{font-size:30px;}
+    .svc, .svc.alt{grid-column:span 12;}
+    .svc h3{font-size:48px;}
+    .proc-grid{grid-template-columns:1fr;}
+    .proc{border-right:none;border-bottom:1px solid var(--rule);}
+    .proc:last-child{border-bottom:none;}
+    .contact .info{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ================================================================
+     MASTHEAD
+     ================================================================ -->
+<header class="masthead">
+  <div class="left">
+    <span class="mono sm">VOL. VII / NO. 03</span>
+    <span class="mono sm">EST. 2025</span>
+    <span class="mono sm news">CALIFORNIA</span>
+  </div>
+  <div class="center">WESTCO&nbsp;<span style="font-family:var(--serif);font-style:italic;text-transform:none;font-weight:400;letter-spacing:-0.02em;">copy</span></div>
+  <nav class="right">
+    <a href="#services" class="nav-link">Services</a>
+    <a href="#manifesto" class="nav-link">Manifesto</a>
+    <a href="#process" class="nav-link">Process</a>
+    <a href="#contact" class="nav-link">Contact</a>
+    <span class="pill">Open · taking 2 clients</span>
+  </nav>
+</header>
+
+<div class="ribbon">
+  <span>Copywriting Studio</span>
+  <span>"SENTENCES WITH RENT TO PAY"</span>
+  <span>Filed under: Brand · Long-form · Launch · Naming</span>
+  <span>Cover price · $0.00</span>
+</div>
+
+<!-- ================================================================
+     HERO
+     ================================================================ -->
+<section class="hero">
+  <div class="wrap">
+    <div class="grid">
+      <div class="leftcol">
+        <span class="vert">Issue · No. 03 · Spring · MMXXVI</span>
+      </div>
+
+      <div class="stack">
+        <div class="title-wrap">
+          <div class="clay-block" aria-hidden="true"></div>
+          <h1 class="megatitle">
+            <span class="row">WESTCO.<span class="ital">copy.</span></span>
+            <span class="row">FOR BRANDS</span>
+            <span class="row">WITH SOMETHING TO SAY.</span>
+          </h1>
+          <h1 class="megatitle flip" aria-hidden="true">
+            <span class="row">WESTCO.<span class="ital">copy.</span></span>
+            <span class="row">FOR BRANDS</span>
+            <span class="row">WITH SOMETHING TO SAY.</span>
+          </h1>
+        </div>
+
+        <div class="hero-meta">
+          <div>
+            <h4>Filed by</h4>
+            <p><em>Alex Padilla</em><br>Founder &amp; Lead Copy</p>
+            <p class="mono" style="margin-top:12px;color:var(--news);">+&nbsp; editors,<br>strategists, and one librarian.</p>
+          </div>
+          <div>
+            <p class="lede">
+              We are a <em>copywriting studio</em> for founders, fashion houses and quietly-ambitious things — building <span class="accent">brands that read out loud.</span> Long-form when it earns it. Three words when it doesn't.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="rightcol">
+        <span class="vert">C0035 / 248-A · APPROVED FOR RELEASE</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     MARQUEE
+     ================================================================ -->
+<div class="marquee">
+  <div class="marquee-inner">
+    <span>Brand voice</span><span class="dot"></span>
+    <span class="ital">manifestos</span><span class="dot"></span>
+    <span>Launch copy</span><span class="dot"></span>
+    <span class="ital">naming</span><span class="dot"></span>
+    <span>Long-form</span><span class="dot"></span>
+    <span class="ital">tone of voice</span><span class="dot"></span>
+    <span>Headlines that don't apologize</span><span class="dot"></span>
+    <span>Brand voice</span><span class="dot"></span>
+    <span class="ital">manifestos</span><span class="dot"></span>
+    <span>Launch copy</span><span class="dot"></span>
+    <span class="ital">naming</span><span class="dot"></span>
+    <span>Long-form</span><span class="dot"></span>
+    <span class="ital">tone of voice</span><span class="dot"></span>
+    <span>Headlines that don't apologize</span><span class="dot"></span>
+  </div>
+</div>
+
+<!-- ================================================================
+     SERVICES — THE KIT
+     ================================================================ -->
+<section class="services" id="services">
+  <div class="wrap">
+    <div class="section-head">
+      <div><div class="num">§ 01 / Services Offered</div></div>
+      <div style="text-align:center;"><h2>THE KIT.</h2></div>
+      <div style="text-align:right;"><div class="num">Six disciplines · one studio</div></div>
+    </div>
+
+    <div class="svc-grid">
+      <div class="svc">
+        <div class="top"><span class="mono">01</span><span class="mono news">Voice</span></div>
+        <h3>Brand<br>voice.</h3>
+        <p>The full vocal-cord workup. How your brand sounds when it whispers, when it shouts, and on the day it has to apologize. Ships with a voice guide your team will actually open, and a lexicon they'll quote in meetings.</p>
+        <ul><li>Voice Guidelines</li><li>Lexicon</li><li>Tone Matrix</li><li>Do / Don't</li></ul>
+      </div>
+
+      <div class="svc">
+        <div class="top"><span class="mono">02</span><span class="mono news">Launch</span></div>
+        <h3>Launch<br>copy.</h3>
+        <p>Site copy, hero lines, the press release, the email your founder is too nervous to send. We write all of it assuming a person, with taste, on a Tuesday afternoon, is going to read it.</p>
+        <ul><li>Homepage</li><li>Press</li><li>Email</li><li>Investor Deck</li></ul>
+      </div>
+
+      <div class="svc alt">
+        <div class="top"><span class="mono">03</span><span class="mono">Naming</span></div>
+        <h3>Naming<br>things.</h3>
+        <p>Products, companies, the haunted SKU nobody wants to inherit. 200-name long-lists, defensible short-lists, the one your CEO will pretend they thought of.</p>
+        <ul><li>Brand Names</li><li>Product Lines</li><li>Tagline</li><li>URL Hunt</li></ul>
+      </div>
+
+      <div class="svc">
+        <div class="top"><span class="mono">04</span><span class="mono news">Editorial</span></div>
+        <h3>Long-<br>form.</h3>
+        <p>Manifestos, founder essays, the slow-burn newsletter that becomes the brand. Reported, edited, footnoted.</p>
+        <ul><li>Manifesto</li><li>Newsletter</li><li>Op-Ed</li><li>About Page</li></ul>
+      </div>
+
+      <div class="svc">
+        <div class="top"><span class="mono">05</span><span class="mono news">Campaign</span></div>
+        <h3>Camp-<br>aigns.</h3>
+        <p>Headlines that fit on a billboard and arguments that fit in a thirty-second spot. We work alongside your designers, or we bring ours.</p>
+        <ul><li>OOH</li><li>Social</li><li>Video Scripts</li><li>Print</li></ul>
+      </div>
+
+      <div class="svc">
+        <div class="top"><span class="mono">06</span><span class="mono news">Rescue</span></div>
+        <h3>The<br>rescue.</h3>
+        <p>You wrote it yourself. It is fine. You hate it. We come in for one week, with a pen, and leave with the version you wanted in the first place.</p>
+        <ul><li>1-Week Sprint</li><li>Audit</li><li>Rewrite</li><li>Polish</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     MANIFESTO
+     ================================================================ -->
+<section class="manifesto" id="manifesto">
+  <div class="wrap">
+    <div class="section-head">
+      <div><div class="num">§ 03 / The Manifesto</div></div>
+      <div style="text-align:center;"><h2>WE BELIEVE.</h2></div>
+      <div style="text-align:right;"><div class="num">Re-issued annually</div></div>
+    </div>
+
+    <div class="grid">
+      <span class="vert">From the editor's desk</span>
+
+      <p class="pull">
+        That a brand is a <span class="strike">logo</span> <em class="accent">sentence</em>.
+        That copy is the part of design that is read out loud.
+        That tone is the new typography.
+        That the right word, set in the right place, on a Tuesday afternoon, can do the work of a media&nbsp;buy.
+        That <span class="display">if it can be deleted, it should be.</span>
+        That the best writing sounds like a person you would <em>trust to feed your dog.</em>
+        We are <span class="markred">not</span> here to fill space.
+        We are here to <span class="display">fill the page</span> with the smallest possible number of words that could only have come from <em>you.</em>
+      </p>
+
+      <span class="vert">— Maren Westcott, founder</span>
+    </div>
+
+    <div class="wrap" style="padding:0;margin-top:0;">
+      <div class="attribution">
+        <div class="who"><em>Westco Copy</em> &nbsp;·&nbsp; first published 2019 &nbsp;·&nbsp; revised whenever we're wrong</div>
+        <div class="mono news">— Document W/C–019 · revised v.06</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     PROCESS
+     ================================================================ -->
+<section class="process" id="process">
+  <div class="wrap">
+    <div class="section-head">
+      <div><div class="num">§ 04 / How we work</div></div>
+      <div style="text-align:center;"><h2>THE METHOD.</h2></div>
+      <div style="text-align:right;"><div class="num">Four weeks · sometimes three</div></div>
+    </div>
+
+    <div class="proc-grid">
+      <div class="proc">
+        <div class="step">01</div>
+        <h4>Listen,<br>at length.</h4>
+        <p>Two long calls. We read every email your founder ever wrote. We ask what you wish you sounded like, and what you do not.</p>
+        <div class="tag"></div>
+      </div>
+      <div class="proc">
+        <div class="step">02</div>
+        <h4>Argue,<br>on paper.</h4>
+        <p>A first draft of voice, tone, and three sample pieces. Marked up by us, then by you. We don't write to please; we write to be true.</p>
+        <div class="tag"></div>
+      </div>
+      <div class="proc">
+        <div class="step">03</div>
+        <h4>Refine,<br>in red pen.</h4>
+        <p>Second pass. Cuts. New cuts. A line you forgot you wanted to read. The version that survives this round is usually the version that ships.</p>
+        <div class="tag"></div>
+      </div>
+      <div class="proc">
+        <div class="step">04</div>
+        <h4>Hand it<br>over.</h4>
+        <p>Final assets, a voice guideline your team will actually open, and a 30-day window where we answer texts about commas.</p>
+        <div class="tag"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     CONTACT
+     ================================================================ -->
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="num mono" style="color:var(--bone-2);margin-bottom:18px;">§ 05 / Get in touch</div>
+
+    <div class="bigemail">
+      WRITE TO US.<br>
+      <a href="mailto:copy@alexwestco.com" class="underline" style="color:inherit;text-decoration:underline;text-underline-offset:.04em;text-decoration-thickness:.06em;">COPY@ALEXWESTCO.COM</a>
+    </div>
+
+    <div class="brief">
+      <div class="intro">
+        <h3>Or send us<br>a <span class="ital">brief.</span></h3>
+        <p>Three sentences will do. We read every one, we reply within forty-eight hours, and we never sell your inbox to anyone.</p>
+
+        <div class="info-row">
+          <div>
+            <h5>Studio</h5>
+            <p>California &middot; remote<br>working with brands worldwide</p>
+          </div>
+          <div>
+            <h5>Availability</h5>
+            <p>Open · taking two clients<br>for July '26.</p>
+          </div>
+          <div>
+            <h5>Direct</h5>
+            <p><a href="mailto:copy@alexwestco.com">copy@alexwestco.com</a></p>
+          </div>
+          <div>
+            <h5>Elsewhere</h5>
+            <p><a href="#">LinkedIn</a> &nbsp; <a href="#">Substack</a><br><a href="#">Are.na</a> &nbsp; <a href="#">Instagram</a></p>
+          </div>
+        </div>
+      </div>
+
+      <form id="briefForm" novalidate>
+        <div class="field">
+          <label>01 — Your name</label>
+          <input type="text" name="name" required placeholder="Alex Padilla" autocomplete="name">
+        </div>
+        <div class="field">
+          <label>02 — Your email</label>
+          <input type="email" name="email" required placeholder="you@yourbrand.com" autocomplete="email">
+        </div>
+        <div class="field">
+          <label>03 — Company <span style="opacity:.6;">(optional)</span></label>
+          <input type="text" name="company" placeholder="What you're building" autocomplete="organization">
+        </div>
+        <div class="field">
+          <label>04 — You need</label>
+          <select name="service" required>
+            <option value="">Choose one…</option>
+            <option>Brand voice</option>
+            <option>Launch copy</option>
+            <option>Naming</option>
+            <option>Long-form / editorial</option>
+            <option>Campaign</option>
+            <option>The rescue (1-week)</option>
+            <option>Not sure — let's talk</option>
+          </select>
+        </div>
+        <div class="field full">
+          <label>05 — The brief <span style="opacity:.6;">(three sentences will do)</span></label>
+          <textarea name="brief" rows="4" required placeholder="What you're working on. What you wish it sounded like. When you need it by."></textarea>
+        </div>
+        <div class="actions">
+          <button type="submit">Send <span class="ital">brief</span> &rarr;</button>
+          <span class="hint">Opens your email client · we reply within 48&nbsp;hrs</span>
+        </div>
+        <div class="sent" id="briefSent">
+          <span class="msg">Brief drafted. Hit send in the email window we just opened.</span>
+          <span class="ok">✓ Handed off</span>
+        </div>
+      </form>
+    </div>
+
+    <div class="colophon">
+      <div class="westco-mark">WESTCO&nbsp;<span style="font-family:var(--serif);font-style:italic;text-transform:none;letter-spacing:-.02em;color:var(--bone-2);">copy</span>.</div>
+      <div>© MMXXVI Westco Copy LLC</div>
+      <div>Set in Anton, Newsreader &amp; Space&nbsp;Mono</div>
+      <div>Printed on the internet</div>
+      <div>Issue No. 03 / Spring</div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      var form = document.getElementById('briefForm');
+      if(!form) return;
+      var sent = document.getElementById('briefSent');
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+        var data = new FormData(form);
+        var name = (data.get('name')||'').trim();
+        var email = (data.get('email')||'').trim();
+        var company = (data.get('company')||'').trim();
+        var service = (data.get('service')||'').trim();
+        var brief = (data.get('brief')||'').trim();
+        if(!name || !email || !brief){
+          form.reportValidity();
+          return;
+        }
+        var subject = 'New brief — ' + name + (company ? ' / ' + company : '') + (service ? ' · ' + service : '');
+        var body =
+          'Hi Westco,\n\n' +
+          brief + '\n\n' +
+          '—\n' +
+          name + '\n' +
+          email +
+          (company ? '\n' + company : '') +
+          (service ? '\n\nLooking for: ' + service : '');
+        var url = 'mailto:copy@alexwestco.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+        window.location.href = url;
+        sent.classList.add('show');
+      });
+    })();
+  </script>
+</section>
+
+</body>
+</html>
