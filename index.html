@@ -25,7 +25,11 @@
     --mono:'Space Mono', ui-monospace, monospace;
   }
   *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;}
   html,body{background:var(--bone);color:var(--ink);}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+  }
   body{
     font-family:var(--serif);
     font-size:18px;
@@ -108,6 +112,54 @@
     border:1px solid var(--ink);
     padding:5px 9px;
     font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  }
+
+  /* "Available" status indicator with pulsing dot + sweep-fill hover */
+  .status{
+    position:relative;
+    display:inline-flex;align-items:center;gap:8px;
+    padding:5px 9px;
+    font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink);
+    text-decoration:none;
+    overflow:hidden;
+    isolation:isolate;
+    transition:color .35s ease;
+  }
+  .status::before{
+    content:"";
+    position:absolute;inset:0;
+    background:var(--clay);
+    transform:scaleX(0);
+    transform-origin:left center;
+    transition:transform .35s cubic-bezier(.7,0,.2,1);
+    z-index:-1;
+  }
+  .status:hover::before,
+  .status:focus-visible::before{transform:scaleX(1);}
+  .status:hover,
+  .status:focus-visible{color:var(--bone);}
+  .status .dot{
+    width:8px;height:8px;border-radius:50%;
+    background:var(--clay);
+    flex-shrink:0;
+    box-shadow:0 0 0 0 rgba(181,68,46,.55);
+    animation:statusPulse 1.8s ease-out infinite;
+    transition:background .35s ease,box-shadow .35s ease;
+  }
+  .status:hover .dot,
+  .status:focus-visible .dot{
+    background:var(--bone);
+    box-shadow:0 0 0 0 rgba(242,238,227,0);
+  }
+  @keyframes statusPulse{
+    0%   { box-shadow:0 0 0 0   rgba(181,68,46,.55); }
+    70%  { box-shadow:0 0 0 9px rgba(181,68,46,0);   }
+    100% { box-shadow:0 0 0 0   rgba(181,68,46,0);   }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .status .dot{animation:none;}
+    .status::before{transition:none;}
   }
 
   /* sub-masthead ribbon */
@@ -540,7 +592,10 @@
     <a href="#manifesto" class="nav-link">Manifesto</a>
     <a href="#process" class="nav-link">Process</a>
     <a href="#contact" class="nav-link">Contact</a>
-    <span class="pill">Open · taking 2 clients</span>
+    <a href="#contact" class="status" aria-label="Available — get in touch">
+      <span class="dot" aria-hidden="true"></span>
+      <span>Available</span>
+    </a>
   </nav>
 </header>
 
