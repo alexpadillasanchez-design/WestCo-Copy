@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>About — New World Ballet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500;1,600&family=Mulish:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+<!--
+  ============================================================================
+   NEW WORLD BALLET — "ABOUT / MEET US" PAGE  (Wix-ready embed)
+  ============================================================================
+   HOW TO EDIT THIS PAGE
+   ---------------------------------------------------------------------------
+   You only ever need to touch ONE place: the CONTENT block in the <script>
+   near the bottom (look for  "===== EDIT YOUR CONTENT BELOW =====").
+
+   • To change ANY wording  -> edit the text inside the quotes "..."
+   • To add a photo         -> paste an image URL into a "photo" field
+   • To add another alum    -> copy one { ... } block, paste it, edit it
+   • To remove an alum      -> delete its { ... } block (and the comma)
+
+   You do NOT need to understand the CSS or the logic below the content block.
+  ============================================================================
+-->
+
+<style>
+  :root{
+    --black:#050505;
+    --panel:#f4a01c;        /* signature orange */
+    --gold:#e6a743;
+    --gold-line:#c9821a;
+    --cream:#fdf6ea;
+    --text-on-orange:#1a1308;
+    --muted:#b9b2a6;
+    --serif:'Cormorant Garamond', Georgia, serif;
+    --sans:'Mulish', -apple-system, system-ui, sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--black);
+    color:var(--cream);
+    font-family:var(--sans);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none;}
+
+  /* ---------- page intro band ---------- */
+  .crumb{ padding:46px 34px 8px; max-width:1280px; margin:0 auto; }
+  .crumb .eyebrow{font-family:var(--sans);font-size:13px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);font-weight:600;}
+  .crumb h1{font-family:var(--serif);font-weight:600;font-size:clamp(48px,7vw,92px);line-height:.98;margin:10px 0 0;color:var(--cream);}
+  .crumb h1 em{font-style:italic;color:var(--gold);}
+
+  .wrap{max-width:1280px;margin:0 auto;padding:0 34px;}
+
+  /* ---------- company section ---------- */
+  .company{ margin:34px auto 0; }
+  .panel{
+    background:var(--panel);
+    border:2px solid var(--gold-line);
+    border-radius:26px;
+    padding:54px 56px;
+    color:var(--text-on-orange);
+    box-shadow:0 22px 60px -28px rgba(244,160,28,.5);
+    max-width:980px;margin:0 auto;
+  }
+  .panel h2{font-family:var(--serif);font-weight:600;font-size:clamp(34px,3.6vw,52px);line-height:1.02;margin:0 0 22px;letter-spacing:-.5px;}
+  .panel p{font-size:17px;line-height:1.62;margin:0 0 16px;color:#241a09;font-weight:400;}
+  .panel p:last-of-type{margin-bottom:0;}
+
+  /* ---------- alumni section ---------- */
+  .alumniHead{ text-align:center;margin:96px auto 8px; }
+  .alumniHead .eyebrow{font-size:13px;letter-spacing:.34em;text-transform:uppercase;color:var(--gold);font-weight:600;}
+  .alumniHead h2{font-family:var(--serif);font-weight:600;font-size:clamp(40px,5.4vw,72px);margin:12px 0 0;line-height:1;color:var(--cream);}
+  .alumniHead p{max-width:560px;margin:18px auto 0;color:var(--muted);font-size:16px;line-height:1.6;}
+
+  .grid{ display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin:46px auto 0; }
+  .card{
+    position:relative;border:none;background:none;padding:0;cursor:pointer;
+    border-radius:20px;overflow:hidden;
+    aspect-ratio:3/4;
+    outline:2px solid rgba(230,167,67,.16);
+    transition:transform .35s cubic-bezier(.2,.7,.2,1), outline-color .3s, box-shadow .35s;
+    font-family:inherit;text-align:left;color:inherit;
+  }
+  .card:hover{transform:translateY(-6px);outline-color:var(--gold);box-shadow:0 26px 48px -24px rgba(0,0,0,.85);}
+  .card.active{outline:3px solid var(--gold);box-shadow:0 0 0 5px rgba(230,167,67,.18), 0 30px 56px -22px rgba(244,160,28,.5);transform:translateY(-6px);}
+  .card .photo{position:absolute;inset:0;}
+  .card .photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+  .card .meta{
+    position:absolute;left:0;right:0;bottom:0;
+    padding:46px 20px 18px;
+    background:linear-gradient(to top, rgba(5,5,5,.92) 8%, rgba(5,5,5,.55) 55%, transparent);
+  }
+  .card .meta .nm{font-family:var(--serif);font-weight:600;font-size:25px;line-height:1.02;color:var(--cream);}
+  .card .meta .rl{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-top:5px;font-weight:700;}
+  .card .tag{
+    position:absolute;top:14px;left:14px;z-index:2;
+    font-size:10px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;
+    color:#2a1c06;background:var(--gold);padding:5px 10px;border-radius:20px;
+  }
+  .card .cue{
+    position:absolute;top:14px;right:14px;z-index:2;
+    width:30px;height:30px;border-radius:50%;display:grid;place-items:center;
+    background:rgba(5,5,5,.55);border:1px solid rgba(230,167,67,.5);color:var(--gold);
+    opacity:0;transform:scale(.7);transition:.3s;
+  }
+  .card:hover .cue{opacity:1;transform:scale(1);}
+
+  /* striped placeholder shown when no photo URL is provided */
+  .ph{
+    position:absolute;inset:0;
+    background:
+      repeating-linear-gradient(135deg, rgba(255,255,255,.04) 0 12px, rgba(255,255,255,0) 12px 24px),
+      linear-gradient(160deg,#2a2620,#15130f);
+    display:grid;place-items:center;
+  }
+  .ph .lbl{font-family:var(--sans);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#7c756a;font-weight:600;text-align:center;padding:0 10px;}
+
+  /* ---------- bio panel ---------- */
+  .bioWrap{margin:40px auto 0;min-height:10px;}
+  .bio{
+    display:grid;grid-template-columns:.85fr 1.15fr;gap:0;
+    background:var(--panel);border:2px solid var(--gold-line);border-radius:26px;overflow:hidden;
+    box-shadow:0 30px 80px -34px rgba(244,160,28,.55);
+    transition:opacity .5s ease, transform .5s ease;
+  }
+  .bio.swap{opacity:0;transform:translateY(14px);}
+  .bio .bioPhoto{position:relative;min-height:420px;background:#15130f;}
+  .bio .bioPhoto img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+  .bio .bioBody{padding:50px 54px;color:var(--text-on-orange);position:relative;}
+  .bio .role{font-size:12px;letter-spacing:.26em;text-transform:uppercase;font-weight:700;color:#6b4a06;}
+  .bio h3{font-family:var(--serif);font-weight:600;font-size:clamp(38px,4vw,56px);line-height:.98;margin:8px 0 4px;color:#1a1308;}
+  .bio .class{font-family:var(--serif);font-style:italic;font-size:21px;color:#3a2a0c;margin-bottom:22px;}
+  .bio .bioText p{font-size:16.5px;line-height:1.62;margin:0 0 14px;color:#241a09;}
+  .bio .stats{display:flex;gap:30px;margin-top:26px;flex-wrap:wrap;border-top:1px solid rgba(0,0,0,.16);padding-top:22px;}
+  .bio .stat .k{font-family:var(--serif);font-weight:700;font-size:30px;line-height:1;color:#1a1308;}
+  .bio .stat .v{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#6b4a06;margin-top:6px;font-weight:600;}
+  .bio .closeBtn{
+    position:absolute;top:22px;right:24px;width:38px;height:38px;border-radius:50%;
+    border:1.5px solid rgba(0,0,0,.35);background:transparent;color:#1a1308;cursor:pointer;
+    font-size:18px;display:grid;place-items:center;transition:.2s;z-index:3;
+  }
+  .bio .closeBtn:hover{background:#1a1308;color:var(--panel);border-color:#1a1308;}
+
+  /* empty prompt */
+  .emptyBio{
+    text-align:center;padding:60px 20px;border:2px dashed rgba(230,167,67,.3);border-radius:26px;
+    color:var(--muted);font-family:var(--serif);font-style:italic;font-size:24px;
+    transition:opacity .4s;
+  }
+
+  footer{margin-top:110px;padding:40px 34px;border-top:1px solid rgba(230,167,67,.14);text-align:center;color:#6f6a60;font-size:13px;letter-spacing:.05em;}
+
+  @media(max-width:980px){
+    .grid{grid-template-columns:repeat(2,1fr);}
+    .bio{grid-template-columns:1fr;}
+    .bio .bioPhoto{min-height:300px;}
+    .panel{padding:38px 30px;}
+  }
+  @media(max-width:560px){
+    .grid{grid-template-columns:1fr 1fr;gap:14px;}
+    .crumb,.wrap{padding-left:20px;padding-right:20px;}
+  }
+</style>
+</head>
+<body>
+
+  <!-- The page renders itself from your CONTENT settings. Nothing to edit here. -->
+  <div class="crumb">
+    <div class="eyebrow" id="pageEyebrow"></div>
+    <h1 id="pageTitle"></h1>
+  </div>
+
+  <section class="wrap">
+    <div class="company">
+      <div class="panel">
+        <h2 id="companyHeading"></h2>
+        <div id="companyBody"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="alumniHead">
+      <div class="eyebrow" id="alumniEyebrow"></div>
+      <h2 id="alumniHeading"></h2>
+      <p id="alumniIntro"></p>
+    </div>
+
+    <div class="grid" id="grid"></div>
+
+    <div class="bioWrap" id="bioWrap">
+      <div class="emptyBio" id="emptyBio"></div>
+    </div>
+  </section>
+
+  <footer id="pageFooter"></footer>
+
+<script>
+  /* ==========================================================================
+     ============   EDIT YOUR CONTENT BELOW — THIS IS THE ONLY PART   =========
+     ============   YOU NEED TO CHANGE TO UPDATE TEXT & PHOTOS        =========
+     ==========================================================================
+
+     PHOTOS:  Put a full image URL in any "photo" field, e.g.
+              photo: "https://static.wixstatic.com/media/your-image.jpg"
+              (In Wix: upload to Media Manager, then copy the file URL.)
+              Leave it as ""  to show a placeholder until you have a photo.
+  */
+  const CONTENT = {
+
+    /* ---- top of page ---- */
+    pageEyebrow: "New World Ballet",
+    // The whole title is shown; wrap the GOLD ITALIC word(s) in <em>...</em>
+    pageTitle: "Meet <em>Us</em>",
+
+    /* ---- company intro panel ---- */
+    companyHeading: "A Company Built Around People",
+    companyParagraphs: [
+      "New World Ballet began with a simple belief: great dancers and good people are made of the same stuff — discipline, heart, and a place that feels like home. What started as a handful of students in a Santa Rosa studio has grown into a non-profit company serving all of Sonoma County.",
+      "Our training is classical at its roots but very much alive in the present. We pair timeless ballet technique with contemporary work, hip hop, and Latin styles, so our dancers learn to see their craft as a living art form — not just a set of steps.",
+      "We welcome dancers of every background, every body, and every budget. And for those who dream big, we offer something rare in the North Bay: a true pre-professional track and a pathway to a real artistic career. The dancers below are proof of where that path can lead."
+    ],
+
+    /* ---- alumni section headings ---- */
+    alumniEyebrow: "Where They Are Now",
+    alumniHeading: "Meet the New World Ballet Alumni",
+    alumniIntro: "Every dancer who comes through our doors writes their own story. Select a face below to read where their training took them.",
+
+    /* ---- the empty prompt shown before a card is clicked ---- */
+    emptyPrompt: "Select an alum above to read their story.",
+
+    /* ---- footer line ---- */
+    footer: "© New World Ballet · 3510 Industrial Dr., Santa Rosa, CA 95403 · A Sonoma County non-profit",
+
+    /* ----------------------------------------------------------------------
+       ALUMNI CARDS
+       Copy a whole { ... } block to add a person. Delete one to remove them.
+       ---------------------------------------------------------------------- */
+    alumni: [
+      {
+        name: "Sofia Marin",
+        role: "Class of 2019",              // small line under the name on the card
+        tag: "Professional",                 // gold pill in the corner of the card
+        now: "Corps de Ballet, Sacramento Ballet", // role line at top of the bio
+        photo: "",                           // <-- paste an image URL here
+        classLine: "Trained at NWB 2011–2019",
+        bio: [
+          "Sofia walked into her first creative-movement class at six years old and never really left. By her teens she was anchoring our pre-professional track, known as much for her quiet work ethic as for her line.",
+          "After graduating she earned a contract with Sacramento Ballet, where she now dances in the corps and understudies soloist roles. She credits NWB for teaching her that discipline is what you do when no one is watching."
+        ],
+        stats: [ ["8 yrs","at NWB"], ["2019","graduated"], ["Pro","contract"] ]
+      },
+      {
+        name: "Marcus Reed",
+        role: "Class of 2020",
+        tag: "University",
+        now: "BFA Dance, University of the Arts",
+        photo: "",
+        classLine: "Trained at NWB 2014–2020",
+        bio: [
+          "Marcus came to ballet late — at fourteen — after years of hip hop. That fusion became his signature. He brought a contemporary edge to the barre and pushed every dancer around him to move bigger.",
+          "He's now pursuing a BFA in Dance, choreographing his own work and returning each summer to guest-teach our hip hop intensives. The North Bay kid who almost didn't try ballet now teaches it."
+        ],
+        stats: [ ["6 yrs","at NWB"], ["BFA","in progress"], ["Guest","faculty"] ]
+      },
+      {
+        name: "Ana Delgado",
+        role: "Class of 2018",
+        tag: "Educator",
+        now: "Studio Director & Teaching Artist",
+        photo: "",
+        classLine: "Trained at NWB 2009–2018",
+        bio: [
+          "Ana grew up in our Latin and folklórico programs before falling in love with classical technique. She danced professionally for three seasons before discovering her real calling: teaching.",
+          "Today she directs a youth program of her own, building the same every-body-welcome community she grew up in. She says she's just paying forward what New World Ballet gave her."
+        ],
+        stats: [ ["9 yrs","at NWB"], ["3","pro seasons"], ["100+","students taught"] ]
+      },
+      {
+        name: "Jordan Pierce",
+        role: "Class of 2021",
+        tag: "Touring",
+        now: "Company Dancer, contemporary tour",
+        photo: "",
+        classLine: "Trained at NWB 2013–2021",
+        bio: [
+          "Jordan was the dancer who'd stay after class to run a phrase one more time. That persistence carried straight into a touring contemporary company, performing in theaters across the country.",
+          "Between tour stops, Jordan mentors our intensive students over video calls — proof that the NWB family stays close no matter how far the work takes you."
+        ],
+        stats: [ ["8 yrs","at NWB"], ["12","cities toured"], ["Mentor","to NWB"] ]
+      }
+    ]
+  };
+  /* ==========================================================================
+     ============   END OF EDITABLE CONTENT — NOTHING BELOW NEEDS   ===========
+     ============   TO CHANGE WHEN YOU UPDATE TEXT OR PHOTOS         ==========
+     ========================================================================== */
+
+
+  // ----- render static text -----
+  document.getElementById('pageEyebrow').textContent   = CONTENT.pageEyebrow;
+  document.getElementById('pageTitle').innerHTML       = CONTENT.pageTitle;
+  document.getElementById('companyHeading').textContent= CONTENT.companyHeading;
+  document.getElementById('companyBody').innerHTML     =
+    CONTENT.companyParagraphs.map(p => `<p>${p}</p>`).join('');
+  document.getElementById('alumniEyebrow').textContent = CONTENT.alumniEyebrow;
+  document.getElementById('alumniHeading').textContent = CONTENT.alumniHeading;
+  document.getElementById('alumniIntro').textContent   = CONTENT.alumniIntro;
+  document.getElementById('emptyBio').textContent      = CONTENT.emptyPrompt;
+  document.getElementById('pageFooter').textContent    = CONTENT.footer;
+
+  const ALUMNI  = CONTENT.alumni;
+  const grid     = document.getElementById('grid');
+  const bioWrap  = document.getElementById('bioWrap');
+  let activeIndex = -1;
+
+  // small helper: escape text so it renders safely as plain text
+  const esc = (s='') => String(s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;');
+
+  // photo cell: real <img> if a URL is given, otherwise the striped placeholder
+  function photoCell(a){
+    return a.photo
+      ? `<img src="${esc(a.photo)}" alt="${esc(a.name)}" loading="lazy" />`
+      : `<div class="ph"><span class="lbl">Add a photo URL</span></div>`;
+  }
+
+  // build cards
+  ALUMNI.forEach((a, i) => {
+    const card = document.createElement('button');
+    card.className = 'card';
+    card.setAttribute('data-index', i);
+    card.setAttribute('aria-label', `Read ${a.name}'s story`);
+    card.innerHTML = `
+      <div class="tag">${esc(a.tag)}</div>
+      <div class="cue">▸</div>
+      <div class="photo">${photoCell(a)}</div>
+      <div class="meta">
+        <div class="nm">${esc(a.name)}</div>
+        <div class="rl">${esc(a.role)}</div>
+      </div>`;
+    card.addEventListener('click', () => select(i));
+    grid.appendChild(card);
+  });
+
+  function bioMarkup(a){
+    return `
+      <div class="bio" id="bioCard">
+        <button class="closeBtn" id="closeBio" aria-label="Close">✕</button>
+        <div class="bioPhoto">${photoCell(a)}</div>
+        <div class="bioBody">
+          <div class="role">${esc(a.now)}</div>
+          <h3>${esc(a.name)}</h3>
+          <div class="class">${esc(a.classLine)}</div>
+          <div class="bioText">${a.bio.map(p=>`<p>${esc(p)}</p>`).join('')}</div>
+          <div class="stats">
+            ${a.stats.map(s=>`<div class="stat"><div class="k">${esc(s[0])}</div><div class="v">${esc(s[1])}</div></div>`).join('')}
+          </div>
+        </div>
+      </div>`;
+  }
+
+  function select(i){
+    const prev = activeIndex;
+    if(i === activeIndex){ deselect(); return; }   // click same card again = close
+    activeIndex = i;
+    document.querySelectorAll('.card').forEach(c=>{
+      c.classList.toggle('active', +c.dataset.index === i);
+    });
+
+    const existing = document.getElementById('bioCard');
+    if(prev === -1 || !existing){
+      bioWrap.innerHTML = bioMarkup(ALUMNI[i]);
+      const card = document.getElementById('bioCard');
+      card.classList.add('swap');
+      requestAnimationFrame(()=>requestAnimationFrame(()=>card.classList.remove('swap')));
+      wireClose();
+    } else {
+      existing.classList.add('swap');           // crossfade to the new bio
+      setTimeout(()=>{
+        bioWrap.innerHTML = bioMarkup(ALUMNI[i]);
+        const card = document.getElementById('bioCard');
+        card.classList.add('swap');
+        requestAnimationFrame(()=>requestAnimationFrame(()=>card.classList.remove('swap')));
+        wireClose();
+      }, 320);
+    }
+    // keep the opened bio in view
+    setTimeout(()=>bioWrap.scrollIntoView({behavior:'smooth', block:'nearest'}), 60);
+  }
+
+  function deselect(){
+    activeIndex = -1;
+    document.querySelectorAll('.card').forEach(c=>c.classList.remove('active'));
+    const existing = document.getElementById('bioCard');
+    if(existing){
+      existing.classList.add('swap');
+      setTimeout(()=>{
+        bioWrap.innerHTML = `<div class="emptyBio" id="emptyBio">${esc(CONTENT.emptyPrompt)}</div>`;
+      }, 360);
+    }
+  }
+
+  function wireClose(){
+    const btn = document.getElementById('closeBio');
+    if(btn) btn.addEventListener('click', deselect);
+  }
+</script>
+</body>
+</html>
